@@ -232,9 +232,19 @@
     html { scroll-behavior: auto; }
     * { animation: none !important; transition: none !important; }
   }
+
+  .preview-badge {
+    position: fixed; bottom: 16px; right: 16px; z-index: 50;
+    background: #38bdf8; color: #06202f;
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em;
+    padding: 8px 14px; border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
+  <div class="preview-badge">Vorschau &middot; Dunkel</div>
 
   <div class="topbar">
     <div class="wrap">
