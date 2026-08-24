@@ -272,9 +272,9 @@
       <h1>Aufbau &amp; Bauteile</h1>
       <p class="lead">
         PHODE ist ein Analogieexperiment zum Welle-Teilchen-Dualismus mit stark
-        abgeschwächtem Laserlicht und einer ortsauflösenden Kamera. Der Aufbau besteht
+        abgeschwächtem Laserlicht und einem zweidimensionalen Detektor. Der Aufbau besteht
         aus modularen, 3D-gedruckten Elementen. Alle Bauteile sind im Folgenden
-        aufgelistet, in der Reihenfolge, wie sie im Aufbau angeordnet sind.
+        aufgelistet.
       </p>
       <p class="o3q-note">
         Die Halterungen der optischen Elemente basieren auf dem modularen
@@ -374,54 +374,47 @@
   const components = [
     {
       title: "Diodenlaser",
-      sub: "Lichtquelle",
       img: "images/laser.jpg",
-      desc: "Erzeugt einen kollimierbaren roten Laserstrahl mit einer Wellenlänge von 635 nm. Die integrierte, verschiebbare Linse sorgt für einen scharf gebündelten Strahl – Voraussetzung für ein klares Interferenzmuster.",
+      desc: "Erzeugt einen kollimierten roten Laserstrahl mit einer Wellenlänge von 635 nm. Die integrierte, verschiebbare Linse sorgt für einen kollimierten Strahl, dieser ist eine Voraussetzung für das typische Interferenzmuster.",
       price: "165 €",
       diy: false,
       sources: [{ label: "Bei Picotronic ansehen", url: "https://www.picotronic.de/picopage/de/product/detail/id/112113" }]
     },
     {
       title: "Neutraldichtefilter, fix",
-      sub: "Abschwächung",
       img: "images/ndfilter-fix.jpg",
-      desc: "Mit einer optischen Dichte von OD 4,0 schwächt dieser Filter den Laserstrahl um den Faktor 10.000 ab, bis er mit bloßem Auge nicht mehr sichtbar ist – die Analogie zu einem Experiment mit extrem geringer Photonenzahl.",
+      desc: "Mit einer optischen Dichte von OD 4,0 schwächt dieser Filter den Laserstrahl um den Faktor 10.000 ab, bis er mit bloßem Auge nicht mehr sichtbar ist. Dies bildet eine sichtbare Grundlage für die Analogie zu einem Experiment mit geringer Photonenzahl.",
       price: "69 €",
       diy: false,
       sources: [{ label: "Bei Thorlabs ansehen", url: "https://www.thorlabs.com/item/NE40A" }]
     },
     {
       title: "Neutraldichtefilter, variabel",
-      sub: "Feinjustage",
       img: "images/ndfilter-variabel.jpg",
-      desc: "Erlaubt die Feinabstimmung der Abschwächung, sodass pro Kamerabild nur wenige, stochastisch verteilte Lichtereignisse registriert werden – Grundlage des „körnigen“ Charakters.",
+      desc: "Erlaubt die Feinabstimmung der Abschwächung, sodass pro Kamerabild nur wenige, stochastisch verteilte Lichtereignisse registriert werden.",
       price: "140 €",
       diy: false,
       sources: [{ label: "Bei Thorlabs ansehen", url: "https://www.thorlabs.com/de/item/NDL-25C-2" }]
     },
     {
       title: "Doppelspalt",
-      sub: "Beugung",
       img: "images/doppelspalt.jpg",
-      desc: "Beugt den abgeschwächten Laserstrahl und erzeugt das namensgebende Interferenzmuster. Spaltabstand 1 mm, Spaltbreite 0,15 mm – gewählt für mehrere gut sichtbare Maxima.",
+      desc: "Beugt den abgeschwächten Laserstrahl und erzeugt das namensgebende Interferenzmuster. Spaltabstand 1 mm, Spaltbreite 0,15 mm, die Größens sind gewählt für mehrere gut sichtbare Maxima auf dem Kameraausschnitt und eine möglichst flache Einhüllende.",
       price: "19 €",
       diy: false,
       sources: [{ label: "Bei 3B Scientific ansehen", url: "https://www.3bscientific.com/de/blende-mit-4-doppelspalten-unterschiedlichen-spaltabstandes-fuer-experimente-zur-optischen-beugung-und-interferenz-1000597-u14101-3b-scientific,p_872_1049.html?searchword=1000597" }]
     },
     {
       title: "Rohrelemente",
-      sub: "Lichtschutz",
       img: "images/rohrelemente.jpg",
       desc: "Diese 3D-gedruckten Rohrelemente blocken Streu- und Umgebungslicht vor der Kamera. Dadurch funktioniert PHODE auch im vollständig beleuchteten Klassenraum, ohne dass abgedunkelt werden muss.",
       price: "Eigenbau",
       diy: true,
-      sources: [{ label: "Druckdatei anfragen", url: "#kontakt" }]
     },
     {
       title: "Kamera & Raspberry Pi 4",
-      sub: "Detektion & Auswertung",
       img: "images/kamera-pi.jpg",
-      desc: "Die Raspberry-Pi-Kamera detektiert ortsaufgelöst einzelne Lichtereignisse hinter dem Doppelspalt – der Teilchenaspekt des Experiments. Der angeschlossene Raspberry Pi 4 summiert die Bilder live auf und stellt das entstehende Interferenzmuster über eine WLAN-Weboberfläche dar.",
+      desc: "Die Raspberry-Pi-Kamera detektiert ortsaufgelöst einzelne Lichtereignisse hinter dem Doppelspalt. Der angeschlossene Raspberry Pi 4 summiert die Bilder live auf und stellt das entstehende Interferenzmuster über eine WLAN-Weboberfläche dar.",
       price: "198 €",
       diy: false,
       sources: [
