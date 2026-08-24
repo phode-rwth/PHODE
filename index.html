@@ -465,10 +465,7 @@
     {
       title: "Rohrelemente",
       img: "images/rohrelemente.jpg",
-      desc: "Diese 3D-gedruckten Rohrelemente blocken Streu- und Umgebungslicht vor der Kamera. Dadurch funktioniert PHODE auch im vollständig beleuchteten Klassenraum, ohne dass abgedunkelt werden muss.",
-      price: "Eigenbau",
-      diy: true,
-      sources: [{ label: "Druckdatei anfragen", url: "#kontakt" }]
+      desc: "Diese 3D-gedruckten Rohrelemente blocken Streu- und Umgebungslicht vor der Kamera. Dadurch funktioniert PHODE auch im vollständig beleuchteten Klassenraum, ohne dass abgedunkelt werden muss."
     },
     {
       title: "Kamera & Raspberry Pi 4",
@@ -490,7 +487,7 @@
   components.forEach((c) => {
     const details = document.createElement('details');
     details.className = 'component';
-    const sourceLinksHtml = c.sources.map(s =>
+    const sourceLinksHtml = (c.sources || []).map(s =>
       `<a class="source-link" href="${s.url}" ${s.url.startsWith('#') ? '' : 'target="_blank" rel="noopener"'}>${s.label}${s.url.startsWith('#') ? '' : ' ↗'}</a>`
     ).join('');
     const thumbHtml = c.img
@@ -499,6 +496,14 @@
     const bigImgHtml = c.img
       ? `<img src="${c.img}" alt="${c.title}" loading="lazy">`
       : `${thumbIcon}<span>Platzhalterbild</span>`;
+
+    const hasFoot = c.price || sourceLinksHtml;
+    const footHtml = hasFoot
+      ? `<div class="component-foot">
+          ${c.price ? `<span class="price${c.diy ? ' diy' : ''}">${c.price}</span>` : '<span></span>'}
+          <span class="source-links">${sourceLinksHtml}</span>
+        </div>`
+      : '';
 
     details.innerHTML = `
       <summary>
@@ -513,10 +518,7 @@
           ${bigImgHtml}
         </div>
         <p class="component-desc">${c.desc}</p>
-        <div class="component-foot">
-          <span class="price${c.diy ? ' diy' : ''}">${c.price}</span>
-          <span class="source-links">${sourceLinksHtml}</span>
-        </div>
+        ${footHtml}
       </div>`;
     list.appendChild(details);
   });
