@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impressum – PHODE</title>
+<meta name="robots" content="noindex">
+<style>
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400 600;
+    font-display: swap;
+    src: url("fonts/inter-variable.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 500 700;
+    font-display: swap;
+    src: url("fonts/space-grotesk-variable.woff2") format("woff2");
+  }
+  :root {
+    --bg: #ffffff;
+    --accent: #00549f;
+    --text: #1e293b;
+    --muted: #5b6470;
+    --line: rgba(30, 41, 59, 0.12);
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  .topbar { background: #1a1a1a; }
+  .topbar .wrap { display: flex; align-items: center; height: 56px; }
+  .wordmark {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+    letter-spacing: 0.04em; color: #ffffff; text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .wordmark .dot { width: 7px; height: 7px; border-radius: 50%; background: #e08900; }
+  main { padding: 40px 0 60px; }
+  h1 {
+    font-family: var(--font-display); font-weight: 600; font-size: 1.8rem;
+    margin-bottom: 24px; color: #17191c;
+  }
+  h2 {
+    font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+    margin: 28px 0 10px; color: var(--accent);
+  }
+  p { color: var(--text); font-size: 0.95rem; margin-bottom: 10px; }
+  a { color: var(--accent); }
+  .back-link { display: inline-block; margin-top: 32px; font-size: 0.88rem; }
+  footer {
+    padding: 20px 0; color: rgba(255,255,255,0.75); font-size: 0.82rem;
+    background: #1a1a1a;
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
+  footer a { color: #ffffff; text-decoration: none; }
+  footer a:hover { color: #e08900; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="wrap">
+      <a class="wordmark" href="index.html"><span class="dot"></span>PHODE</a>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap">
+      <h1>Impressum</h1>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        Norman Thimm<br>
+        AG Prof. Dr. Heinke<br>
+        I. Physikalisches Institut IA<br>
+        RWTH Aachen University<br>
+        Sommerfeldstr. 14<br>
+        52074 Aachen
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href="mailto:thimm@physik.rwth-aachen.de">thimm@physik.rwth-aachen.de</a></p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>
+        Norman Thimm<br>
+        I. Physikalisches Institut IA, RWTH Aachen University<br>
+        Sommerfeldstr. 14, 52074 Aachen
+      </p>
+
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten
+        nach den allgemeinen Gesetzen verantwortlich. Diese Seite dokumentiert PHODE, ein
+        Lehr-/Lernexperiment zum Welle-Teilchen-Dualismus, im Rahmen der Forschungs- und
+        Öffentlichkeitsarbeit des I. Physikalischen Instituts IA.
+      </p>
+
+      <h2>Haftung für Links</h2>
+      <p>
+        Diese Website enthält Links zu externen Websites Dritter (z. B. Anbieter von
+        Bauteilen), auf deren Inhalte wir keinen Einfluss haben. Für diese fremden Inhalte
+        können wir daher keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist
+        stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+      </p>
+
+      <h2>Urheberrecht</h2>
+      <p>
+        Die auf dieser Seite erstellten Inhalte, Fotos und Grafiken unterliegen dem deutschen
+        Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet.
+      </p>
+
+      <a class="back-link" href="index.html">← Zurück zur PHODE-Seite</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>&copy; 2026 I. Physikalisches Institut IA, RWTH Aachen</span>
+      <span><a href="datenschutz.html">Datenschutz</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -5,10 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PHODE – Aufbau &amp; Bauteile</title>
 <meta name="description" content="PHODE: Ein Experiment zum Welle-Teilchen-Dualismus aus dem 3D-Drucker. Alle Bauteile, Kosten und Bezugsquellen im Überblick.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400 600;
+    font-display: swap;
+    src: url("fonts/inter-variable.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 500 700;
+    font-display: swap;
+    src: url("fonts/space-grotesk-variable.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/ibm-plex-mono-400.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("fonts/ibm-plex-mono-500.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("fonts/ibm-plex-mono-600.woff2") format("woff2");
+  }
   :root {
     --bg: #ffffff;
     --bg-panel: #ffffff;
@@ -61,6 +93,38 @@
   .topnav a { color: rgba(255,255,255,0.72); text-decoration: none; }
   .topnav a:hover, .topnav a:focus-visible { color: #ffffff; }
   @media (max-width: 520px) { .topnav { display: none; } }
+  .topbar-right { display: flex; align-items: center; gap: 18px; }
+  .lang-toggle {
+    background: transparent; color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.35); border-radius: 6px;
+    font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.03em;
+    padding: 5px 10px; cursor: pointer;
+  }
+  .lang-toggle:hover, .lang-toggle:focus-visible { border-color: rgba(255,255,255,0.7); }
+
+  /* ---------- Bilingual content: toggled via html[lang] ---------- */
+  html[lang="de"] [data-en] { display: none; }
+  html[lang="en"] [data-de] { display: none; }
+
+  /* ---------- Variant toggle (O3Q / The Bench) ---------- */
+  .variant-toggle {
+    display: inline-flex; gap: 6px; padding: 4px;
+    background: #f2f4f6; border-radius: 10px; margin-bottom: 20px;
+  }
+  .variant-toggle button {
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+    padding: 7px 16px; border-radius: 7px; border: none; cursor: pointer;
+    background: transparent; color: var(--muted);
+  }
+  .variant-toggle button.active {
+    background: var(--accent); color: #ffffff;
+  }
+  body[data-variant="o3q"] [data-variant-note="bench"] { display: none; }
+  body[data-variant="bench"] [data-variant-note="o3q"] { display: none; }
+  .aufbau-overview {
+    width: 100%; height: auto; display: block;
+    border-radius: 12px; margin-top: 16px;
+  }
 
   /* ---------- Hero ---------- */
   .hero { padding: 40px 0 32px; background: #e4e6e9; }
@@ -87,31 +151,99 @@
     font-size: 0.98rem;
     max-width: 58ch;
   }
-  .hero .o3q-note {
-    margin-top: 16px;
+  .ref-link {
+    font-size: 0.7em;
+    vertical-align: super;
+    color: var(--accent);
+    text-decoration: none;
+    margin-left: 1px;
+  }
+  .ref-link:hover, .ref-link:focus-visible { text-decoration: underline; }
+
+  /* ---------- Quellen ---------- */
+  .sources-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 10px;
+    font-size: 0.88rem; color: var(--muted);
+  }
+  .sources-list li { display: flex; gap: 8px; }
+  .sources-list .ref-num { color: var(--accent); font-family: var(--font-mono); flex: none; }
+  .sources-list a { color: var(--accent); }
+  .team-note {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .o3q-note {
+    margin-bottom: 20px;
     font-size: 0.88rem;
     color: #565d64;
   }
-  .hero .o3q-note a {
+  .o3q-note a {
     text-decoration: none;
     font-weight: 600;
   }
-  .hero .o3q-note a:hover { text-decoration: underline; }
+  .o3q-note a:hover { text-decoration: underline; }
 
-  /* ---------- Section headers ---------- */
-  section { padding: 40px 0; }
-  section + section { border-top: 1px solid var(--line); }
-  .section-head { margin-bottom: 24px; }
-  h2 {
+  /* ---------- Motivation (collapsible info box) ---------- */
+  details.info-box {
+    margin-top: 18px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid var(--accent);
+  }
+  details.info-box summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 16px;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.94rem;
+    color: var(--text);
+    background: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+  }
+  details.info-box[open] summary { background: var(--accent-dim); }
+  details.info-box summary::-webkit-details-marker { display: none; }
+  details.info-box summary::marker { content: ""; }
+  details.info-box[open] .chevron { transform: rotate(180deg); }
+  .info-body {
+    padding: 2px 16px 16px;
+    color: #454b52;
+    font-size: 0.92rem;
+  }
+
+  /* ---------- Section headers (collapsible) ---------- */
+  details.section-block { padding: 14px 0; }
+  details.section-block[open] { padding: 40px 0; }
+  details.section-block > summary {
+    list-style: none;
+    pointer-events: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  details.section-block > summary::-webkit-details-marker { display: none; }
+  details.section-block > summary::marker { content: ""; }
+  .section-toggle-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
     font-family: var(--font-display); font-weight: 600;
     font-size: 1.1rem;
-    margin: 0 0 8px;
     color: #ffffff;
     background: var(--accent);
     padding: 10px 16px;
     border-radius: 4px;
+    cursor: pointer;
+    pointer-events: auto;
   }
-  .section-head p { color: var(--muted); font-size: 0.92rem; }
+  .section-toggle-bar .chevron { color: #ffffff; }
+  details.section-block[open] > summary .section-toggle-bar .chevron { transform: rotate(180deg); }
+  .section-body { padding-top: 24px; }
+  .section-desc { color: var(--muted); font-size: 0.92rem; margin-bottom: 24px; }
+  .result-subheading {
+    font-family: var(--font-display); font-weight: 600; font-size: 1rem;
+    color: var(--accent); margin-bottom: 12px;
+  }
 
   /* ---------- Component list: rounded card, colour as outline only ---------- */
   .component-list {
@@ -178,6 +310,41 @@
     font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.05em;
     text-transform: uppercase;
   }
+  .placeholder-img.wide {
+    max-width: none; aspect-ratio: 16 / 9; margin-bottom: 0;
+  }
+
+  /* ---------- Didaktisches Potential ---------- */
+  .potential-list { display: flex; flex-direction: column; gap: 22px; }
+  .potential-item h3 {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.94rem;
+    color: var(--text); margin-bottom: 10px;
+  }
+  .quote-card {
+    background: #ffffff; border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .quote-card + .quote-card { margin-top: 10px; }
+  .quote-card p { font-size: 0.9rem; color: var(--muted); font-style: italic; }
+
+  /* Poster-Farbcodierung je Potential-Punkt */
+  .potential-item[data-color="orange"] h3 { color: #b96f00; }
+  .potential-item[data-color="orange"] .quote-card { border-left-color: var(--laser); background: var(--laser-dim); }
+
+  .potential-item[data-color="blue"] h3 { color: var(--accent); }
+  .potential-item[data-color="blue"] .quote-card { border-left-color: var(--accent); background: var(--accent-dim); }
+
+  .potential-item[data-color="red"] h3 { color: #a11035; }
+  .potential-item[data-color="red"] .quote-card { border-left-color: #a11035; background: rgba(161,16,53,0.06); }
+
+  .potential-item[data-color="magenta"] h3 { color: #9c2896; }
+  .potential-item[data-color="magenta"] .quote-card { border-left-color: #9c2896; background: rgba(156,40,150,0.06); }
+
+  .potential-item[data-color="green"] h3 { color: #1a7a4c; }
+  .potential-item[data-color="green"] .quote-card { border-left-color: #1a7a4c; background: rgba(26,122,76,0.06); }
+
+  .potential-item[data-color="purple"] h3 { color: #5b3fa0; }
+  .potential-item[data-color="purple"] .quote-card { border-left-color: #5b3fa0; background: rgba(91,63,160,0.06); }
   .component-desc { color: var(--muted); font-size: 0.92rem; margin-bottom: 16px; }
   .component-foot {
     display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
@@ -264,6 +431,8 @@
   footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
   footer a { color: #ffffff; text-decoration: none; }
   footer a:hover { color: #e08900; }
+  .footer-archive-link a { color: rgba(255,255,255,0.6); font-size: 0.78rem; }
+  .footer-archive-link a:hover { color: #e08900; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -272,103 +441,358 @@
 
 </style>
 </head>
-<body>
+<body data-variant="o3q">
 
   <div class="topbar">
     <div class="wrap">
       <a class="wordmark" href="#top">PHODE</a>
-      <nav class="topnav">
-        <a href="#bauteile">Bauteile</a>
-        <a href="#software">Software</a>
-        <a href="#ergebnisse">Ergebnisse</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
+      <div class="topbar-right">
+        <nav class="topnav">
+          <a href="#bauteile"><span data-de>Bauteile</span><span data-en>Components</span></a>
+          <a href="#software">Software</a>
+          <a href="#ergebnisse"><span data-de>Ergebnisse</span><span data-en>Results</span></a>
+          <a href="#kontakt"><span data-de>Kontakt</span><span data-en>Contact</span></a>
+        </nav>
+        <button class="lang-toggle" id="langToggle" type="button">DE</button>
+      </div>
     </div>
   </div>
 
   <div id="top"></div>
   <header class="hero">
     <div class="wrap">
-      <h1>Aufbau &amp; Bauteile</h1>
+      <h1>
+        <span data-de>Aufbau &amp; Bauteile</span>
+        <span data-en>Setup &amp; Components</span>
+      </h1>
       <p class="lead">
-        PHODE ist ein Analogieexperiment zum Welle-Teilchen-Dualismus mit stark
+        <span data-de>PHODE ist ein Analogieexperiment zum Welle-Teilchen-Dualismus mit stark
         abgeschwächtem Laserlicht und einem zweidimensionalen Detektor. Der Aufbau besteht
-        aus modularen, 3D-gedruckten Elementen. Alle Bauteile sind im Folgenden
-        aufgelistet.
+        aus modularen, 3D-gedruckten Elementen. PHODE ist in zwei Versionen verfügbar:
+        kompatibel mit dem System O3Q<a class="ref-link" href="#quellen-o3q">[1]</a> und kompatibel
+        mit &quot;The Bench&quot;<a class="ref-link" href="#quellen-bench">[2]</a>. Alle Bauteile
+        sind im Folgenden aufgelistet.</span>
+        <span data-en>PHODE is an analogy experiment for wave&ndash;particle duality using
+        strongly attenuated laser light and a two-dimensional detector. The setup consists
+        of modular, 3D-printed components. PHODE is available in two versions: compatible
+        with the O3Q system<a class="ref-link" href="#quellen-o3q">[1]</a> and compatible with
+        &quot;The Bench&quot;<a class="ref-link" href="#quellen-bench">[2]</a>. All components
+        are listed below.</span>
       </p>
-      <p class="o3q-note">
-        Die Halterungen der optischen Elemente basieren auf dem modularen
-        <a href="https://o3q.de/" target="_blank" rel="noopener">O3Q-Optiksystem ↗</a>.
-      </p>
+      <details class="info-box">
+        <summary>
+          <span><span data-de>Motivation</span><span data-en>Motivation</span></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="info-body">
+          <p>
+            <span data-de>Quantenphysikalische Phänomene treten in nahezu allen Themenbereichen
+            der Physik auf, sind allerdings für Lernende oft schwer zugänglich, da sie sich nicht
+            mit Alltagserfahrungen und vorher gelernten klassischen Vorstellungen beschreiben
+            lassen. Es fehlen anschauliche und kostengünstige Realexperimente, die dazu dienen,
+            die Quantenphysik greifbarer zu gestalten. Der Doppelspalt eignet sich besonders, um
+            viele zentrale Inhalte und Fragen der Quantenphysik zu zeigen, er gilt daher als
+            &quot;didaktischer Alleskönner&quot; der Quantenphysik<a class="ref-link" href="#quellen-leisen">[3]</a>.</span>
+            <span data-en>Quantum phenomena occur across nearly all areas of physics, yet they
+            are often hard for learners to grasp, since they cannot be described using everyday
+            experience or previously learned classical concepts. There is a lack of vivid,
+            low-cost real experiments that help make quantum physics more tangible. The
+            double-slit experiment is particularly well suited to illustrating many of the
+            central topics and questions of quantum physics, which is why it is considered the
+            &quot;didactic all-rounder&quot; of quantum physics<a class="ref-link" href="#quellen-leisen">[3]</a>.</span>
+          </p>
+          <p style="margin-top: 12px;">
+            <span data-de>Eine zentrale Besonderheit von Quantenobjekten besteht dabei darin,
+            dass sie sich nicht ausschließlich durch ein klassisches Teilchen- oder Wellenbild
+            beschreiben lassen, sondern sowohl Teilchen- als auch Welleneigenschaften aufweisen.
+            In der Schule werden diese Eigenschaften jedoch häufig anhand voneinander getrennter
+            Experimente demonstriert. Dadurch kann die Vorstellung begünstigt werden, dass
+            Quantenobjekte je nach experimenteller Situation entweder als Teilchen oder als Welle
+            auftreten. Diesen Ansatz greift PHODE auf und bietet die Möglichkeit, innerhalb eines
+            Doppelspaltversuchs Wellen- und Teilcheneigenschaften gleichzeitig in einem Experiment
+            zu beobachten. Auf diese Weise ermöglicht PHODE einen verständlichen Zugang zu der
+            Vorstellung, dass Photonen als Quantenobjekte sowohl durch Teilchen- als auch durch
+            Welleneigenschaften beschrieben werden müssen.</span>
+            <span data-en>A key characteristic of quantum objects is that they cannot be fully
+            described by a classical particle or wave picture alone, but instead exhibit both
+            particle and wave properties. In schools, however, these properties are often
+            demonstrated using separate experiments. This can encourage the misconception that
+            quantum objects behave either entirely as particles or entirely as waves, depending
+            on the experimental situation. PHODE addresses this by making it possible to observe
+            wave and particle properties simultaneously within a single double-slit experiment.
+            In this way, PHODE provides an accessible route to understanding that photons, as
+            quantum objects, must be described by both particle and wave properties.</span>
+          </p>
+        </div>
+      </details>
+      <div class="variant-toggle" role="group" aria-label="Hardware variant">
+        <button type="button" data-variant-btn="o3q" class="active">O3Q</button>
+        <button type="button" data-variant-btn="bench">The Bench</button>
+      </div>
+      <img class="aufbau-overview" data-variant-note="o3q" src="images/aufbau-o3q.jpg" alt="Gesamtaufbau von PHODE mit dem O3Q-Optiksystem">
+      <img class="aufbau-overview" data-variant-note="bench" src="images/aufbau-the-bench.jpg" alt="Gesamtaufbau von PHODE mit dem &quot;The Bench&quot;-System">
     </div>
   </header>
 
-  <section id="bauteile">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Bauteile</h2>
-        <p>Auf einen Eintrag tippen, um weitere Informationen aufzuklappen.</p>
+  <details class="section-block" id="bauteile">
+    <summary>
+      <div class="wrap">
+        <div class="section-toggle-bar">
+          <span><span data-de>Bauteile</span><span data-en>Components</span></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </div>
+    </summary>
+    <div class="wrap section-body">
+      <p class="section-desc">
+        <span data-de>Auf einen Eintrag tippen, um weitere Informationen aufzuklappen.</span>
+        <span data-en>Tap an entry to expand more information.</span>
+      </p>
+      <div class="variant-toggle" role="group" aria-label="Hardware variant">
+        <button type="button" data-variant-btn="o3q" class="active">O3Q</button>
+        <button type="button" data-variant-btn="bench">The Bench</button>
+      </div>
+      <p class="o3q-note" data-variant-note="o3q">
+        <span data-de>Die Halterungen der optischen Elemente basieren auf dem modularen
+        <a href="https://o3q.de/" target="_blank" rel="noopener">O3Q-Optiksystem ↗</a>.</span>
+        <span data-en>The mounts for the optical elements are based on the modular
+        <a href="https://o3q.de/" target="_blank" rel="noopener">O3Q optics system ↗</a>.</span>
+      </p>
+      <p class="o3q-note" data-variant-note="bench">
+        <span data-de>Die Halterungen der optischen Elemente basieren auf dem magnetischen
+        Haltersystem &quot;The Bench&quot;.</span>
+        <span data-en>The mounts for the optical elements are based on the magnetic
+        mounting system &quot;The Bench&quot;.</span>
+      </p>
       <div class="component-list" id="componentList"></div>
-      <div class="total-note">Materialkosten insgesamt: <strong>ca. 625&nbsp;€</strong> (Stand 05/2026) &middot; zzgl. ca. 35&nbsp;h Druckzeit &amp; 500&nbsp;g Filament (PETG)</div>
+      <div class="total-note" id="totalNote"></div>
     </div>
-  </section>
+  </details>
 
-  <section id="software">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Software</h2>
-        <p>Der Raspberry Pi läuft mit einer für PHODE entwickelten Software,
-        die über eine WLAN-Weboberfläche bedient wird.</p>
+  <details class="section-block" id="software">
+    <summary>
+      <div class="wrap">
+        <div class="section-toggle-bar">
+          <span>Software</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </div>
+    </summary>
+    <div class="wrap section-body">
+      <p class="section-desc">
+        <span data-de>Der Raspberry Pi läuft mit einer für PHODE entwickelten Software,
+        die über eine WLAN-Weboberfläche bedient wird.</span>
+        <span data-en>The Raspberry Pi runs software developed specifically for PHODE,
+        operated via a WLAN web interface.</span>
+      </p>
       <div class="panel">
         <div class="placeholder-img" style="max-width: none; aspect-ratio: auto; background: none;">
-          <img src="images/Auswahlfenster.jpg" alt="Auswahl des Messbereichs in der PHODE-Software" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
+          <img src="images/Auswahlfenster.jpg" alt="Measurement region selection in the PHODE software" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
         </div>
         <p style="color: var(--muted); font-size: 0.92rem; margin-bottom: 20px;">
-          Ein Livebild hilft bei der Justage; der Messbereich lässt sich direkt im
+          <span data-de>Ein Livebild hilft bei der Justage; der Messbereich lässt sich direkt im
           Kamerabild per Klick festlegen. Belichtungszeit, ISO-Empfindlichkeit, ein
           unterer Schwellenwert zur Rauschunterdrückung sowie Gewichtungsfaktoren
-          der drei Farbkanäle können frei eingestellt werden.
+          der drei Farbkanäle können frei eingestellt werden.</span>
+          <span data-en>A live view assists with alignment; the measurement region can be
+          set directly in the camera image by clicking. Exposure time, ISO sensitivity, a
+          lower threshold for noise suppression, and weighting factors for the three
+          colour channels can all be freely adjusted.</span>
         </p>
         <div class="placeholder-img" style="max-width: none; aspect-ratio: auto; background: none;">
-          <img src="images/6Minuten_zuschnitt.png" alt="Aufsummiertes Interferenzmuster nach 6 Minuten Messzeit" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
+          <img src="images/6Minuten_zuschnitt.png" alt="Accumulated interference pattern after 6 minutes of measurement" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
         </div>
         <p style="color: var(--muted); font-size: 0.92rem;">
-          Während der Messung summiert die Software die einzelnen Kamerabilder
+          <span data-de>Während der Messung summiert die Software die einzelnen Kamerabilder
           fortlaufend auf und stellt sowohl das aufsummierte Bild (Messung) als auch
           die daraus berechnete Intensitätsverteilung (Spalten) live dar. Im Reiter
           (Dual) wird sowohl das aufsummierte Bild als auch die Intensitätsverteilung
           dargestellt. So wird das Entstehen des Interferenzmusters über mehrere
           Minuten hinweg direkt sichtbar. Entwickelt wurde die Software von
-          Sebastian Staacks.
+          Sebastian Staacks.</span>
+          <span data-en>During a measurement, the software continuously accumulates the
+          individual camera frames and displays both the summed image (Measurement tab)
+          and the resulting intensity distribution (Columns tab) live. The (Dual) tab
+          shows both the summed image and the intensity distribution together. This makes
+          the gradual emergence of the interference pattern directly visible over several
+          minutes. The software was developed by Sebastian Staacks.</span>
         </p>
       </div>
     </div>
-  </section>
+  </details>
 
-  <section id="ergebnisse">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Ergebnisse</h2>
-        <p>Wie sich das Interferenzmuster von PHODE über einige Minuten aus einzelnen
-        Ereignissen aufbaut, zeigt dieses Video.</p>
+  <details class="section-block" id="ergebnisse">
+    <summary>
+      <div class="wrap">
+        <div class="section-toggle-bar">
+          <span><span data-de>Ergebnisse</span><span data-en>Results</span></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </div>
+    </summary>
+    <div class="wrap section-body">
+      <h3 class="result-subheading"><span data-de>Qualitative Auswertung</span><span data-en>Qualitative Evaluation</span></h3>
+      <p class="section-desc">
+        <span data-de>Wie sich das Interferenzmuster von PHODE über einige Minuten aus
+        einzelnen Ereignissen aufbaut, zeigt dieses Video.</span>
+        <span data-en>This video shows how the PHODE interference pattern gradually
+        builds up from individual events over several minutes.</span>
+      </p>
+      <a class="btn" href="video/" style="margin-bottom: 20px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v18l15-9L5 3Z"/></svg>
+        <span data-de>Video ansehen</span><span data-en>Watch video</span>
+      </a>
+      <h3 class="result-subheading" style="margin-top: 8px;"><span data-de>Quantitative Auswertung – Bestimmung der Laserwellenlänge</span><span data-en>Quantitative Evaluation – Determining the Laser Wavelength</span></h3>
       <div class="panel">
-        <a class="btn" href="video/">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3v18l15-9L5 3Z"/></svg>
-          Video ansehen
-        </a>
+        <div class="placeholder-img" style="max-width: none; aspect-ratio: auto; background: none;">
+          <img src="images/auswertung-wellenlaenge.png" alt="Ausgewertete Intensitätsverteilung mit markiertem Maxima-Abstand" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
+        </div>
+        <p style="color: var(--muted); font-size: 0.92rem; margin-top: 14px;">
+          <span data-de>Aus dem gemessenen Abstand der Interferenzmaxima Δx lässt sich die
+          Wellenlänge λ des verwendeten Lasers bestimmen: λ = Δx&nbsp;·&nbsp;g&nbsp;/&nbsp;d.
+          Dabei steht g für die Gitterkonstante (g&nbsp;=&nbsp;1&nbsp;mm) und d&nbsp;=&nbsp;475&nbsp;mm
+          für den Abstand zwischen Doppelspalt und Kamera.</span>
+          <span data-en>From the measured spacing of the interference maxima Δx, the wavelength λ
+          of the laser used can be determined: λ = Δx&nbsp;·&nbsp;g&nbsp;/&nbsp;d. Here, g denotes
+          the grating constant (g&nbsp;=&nbsp;1&nbsp;mm) and d&nbsp;=&nbsp;475&nbsp;mm the distance
+          between the double slit and the camera.</span>
+        </p>
+        <p style="color: var(--muted); font-size: 0.92rem; margin-top: 10px;">
+          <span data-de>Damit ergibt sich für die Wellenlänge ein rechnerischer Wert von
+          636,12&nbsp;nm und somit ein Ergebnis von 640&nbsp;nm ± 40&nbsp;nm, dieser Wert ist im
+          Rahmen der Messunsicherheit vereinbar mit der Herstellerangabe von 635&nbsp;nm.</span>
+          <span data-en>This gives a calculated wavelength of 636.12&nbsp;nm and thus a result of
+          640&nbsp;nm ± 40&nbsp;nm, a value consistent, within measurement uncertainty, with the
+          manufacturer's stated 635&nbsp;nm.</span>
+        </p>
       </div>
     </div>
-  </section>
+  </details>
 
-  <section id="kontakt">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Kontakt</h2>
-        <p>Fragen, Rückmeldungen oder Interesse an den Materialien? Meldet euch gerne.</p>
+  <details class="section-block" id="potential">
+    <summary>
+      <div class="wrap">
+        <div class="section-toggle-bar">
+          <span><span data-de>Didaktisches Potential &amp; Lehrkräfte-Feedback</span><span data-en>Didactic Potential &amp; Teacher Feedback</span></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
       </div>
+    </summary>
+    <div class="wrap section-body">
+      <p class="section-desc">
+        <span data-de>Vorüberlegungen zum didaktischen Potential, bestätigt durch eine
+        Erprobung mit fünf Physik-Lehrkräften:</span>
+        <span data-en>Considerations on the didactic potential, confirmed in a trial with
+        five physics teachers:</span>
+      </p>
+      <div class="potential-list">
+        <div class="potential-item" data-color="orange">
+          <h3><span data-de>Einsatz als Demonstrationsexperiment</span><span data-en>Use as a demonstration experiment</span></h3>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„Ich finde, es hat den großen didaktischen Mehrwert, dass ich als
+              Lehrkraft sehr schön in einem Demonstrationsexperiment einmal zeigen kann, was
+              Sache ist.“</span>
+              <span data-en>&quot;I think it has great didactic value because, as a teacher, I
+              can nicely show what's really going on in a demonstration experiment.&quot;</span>
+            </p>
+          </blockquote>
+        </div>
+        <div class="potential-item" data-color="blue">
+          <h3><span data-de>Modulare Elemente sorgen für einen übersichtlichen, reproduzierbaren Aufbau</span><span data-en>Modular elements make for a clear, reproducible setup</span></h3>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„Ich finde es sehr übersichtlich. […] Es ist keine Blackbox, alles
+              ist einzeln zu erkennen. Das, finde ich, macht den Aufbau übersichtlich und gut
+              einsetzbar.“</span>
+              <span data-en>&quot;I find it very clear. […] It's not a black box, everything
+              can be identified individually. I think that makes the setup clear and easy to
+              use.&quot;</span>
+            </p>
+          </blockquote>
+        </div>
+        <div class="potential-item" data-color="red">
+          <h3><span data-de>Teilchen- und Welleneigenschaften werden gleichzeitig sichtbar</span><span data-en>Particle and wave properties become visible at the same time</span></h3>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„Wir haben einen Laser und wir filtern den so raus, dass man da
+              sieht, okay, da kommen nur einzelne Impulse an, aber im Endeffekt entwickelt sich
+              doch ein Interferenzmuster. Also sozusagen diese Aspekte, Welle, Teilchen, sieht
+              man da schon ganz schön.“</span>
+              <span data-en>&quot;We have a laser and we filter it down so that you see, okay,
+              only individual pulses are arriving, but in the end an interference pattern still
+              develops. So you can really see these aspects, wave, particle.&quot;</span>
+            </p>
+          </blockquote>
+        </div>
+        <div class="potential-item" data-color="magenta">
+          <h3><span data-de>Stochastischer Aspekt quantenmechanischer Vorhersagbarkeit ist sichtbar</span><span data-en>The stochastic nature of quantum predictability becomes visible</span></h3>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„…die ersten paar Photonen, die drauftreffen, zu sagen: Okay, das
+              könnte jetzt zufällig sein…“</span>
+              <span data-en>&quot;…the first few photons that hit, you'd say: okay, that could
+              just be random…&quot;</span>
+            </p>
+          </blockquote>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„Man muss ja einmal so ein Bild haben, wo man erstmal nichts
+              erkennt. […] Und jetzt komme ich schon in den Bereich, wo man sagt, ja, okay,
+              doch, da zeichnet sich irgendwas ab.“</span>
+              <span data-en>&quot;You need to have seen an image where at first you can't make
+              anything out. […] And then you get to the point where you say, okay, yes,
+              something is starting to take shape.&quot;</span>
+            </p>
+          </blockquote>
+        </div>
+        <div class="potential-item" data-color="green">
+          <h3><span data-de>Live-Auswertung der Messdaten mit der Klasse möglich</span><span data-en>Live evaluation of measurement data with the class is possible</span></h3>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„Ich kann mir gut vorstellen, auf einem großen Bildschirm […] die
+              Messwerte aufbauen zu lassen, das mit den Schülern zu diskutieren, dass man
+              schnell den Übergang dann hat zum Teilchencharakter und nachher zum Dualismus
+              dann auch.“</span>
+              <span data-en>&quot;I can well imagine letting the measurement data build up live
+              on a big screen […] and discussing it with students, so that you quickly get to
+              the particle character and then to the duality as well.&quot;</span>
+            </p>
+          </blockquote>
+        </div>
+        <div class="potential-item" data-color="purple">
+          <h3><span data-de>Low-Cost-DIY-Aufbau, z. B. im Rahmen von Projektarbeiten oder AGs</span><span data-en>Low-cost DIY build, e.g. as a student project or club activity</span></h3>
+          <blockquote class="quote-card">
+            <p>
+              <span data-de>„Interessant kann das dann ja auch werden, wenn man Projektkurse,
+              Projektarbeiten, Facharbeiten da mit andenkt. […] Die ganze Herstellung ist ja ein
+              kleines Projekt, […] und in Physik, Technik, Informatik […] könnte das ja auch
+              eine Projektarbeit sein.“</span>
+              <span data-en>&quot;It also gets interesting when you think about project
+              courses, projects, extended essays. […] The whole build is a small project in
+              itself […] and in physics, technology, computer science […] it could well be a
+              project too.&quot;</span>
+            </p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="section-block" id="kontakt" open>
+    <summary>
+      <div class="wrap">
+        <div class="section-toggle-bar">
+          <span><span data-de>Kontakt</span><span data-en>Contact</span></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+    </summary>
+    <div class="wrap section-body">
+      <p class="section-desc">
+        <span data-de>Fragen, Rückmeldungen oder Interesse an den Materialien? Meldet euch gerne.</span>
+        <span data-en>Questions, feedback, or interested in the materials? Feel free to get in touch.</span>
+      </p>
       <div class="panel">
         <h3 style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 6px;">Norman Thimm</h3>
         <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 20px;">
@@ -380,154 +804,279 @@
 
         <form id="contact-form" class="contact-form">
           <div class="form-row">
-            <label for="cf-name">Name</label>
+            <label for="cf-name"><span data-de>Name (optional)</span><span data-en>Name (optional)</span></label>
             <input type="text" id="cf-name" name="name" data-fs-field>
           </div>
           <div class="form-row">
-            <label for="cf-email">E-Mail *</label>
+            <label for="cf-email"><span data-de>E-Mail *</span><span data-en>Email *</span></label>
             <input type="email" id="cf-email" name="email" required data-fs-field>
             <span data-fs-error="email" class="field-error"></span>
           </div>
           <div class="form-row">
-            <label for="cf-message">Nachricht *</label>
+            <label for="cf-message"><span data-de>Nachricht *</span><span data-en>Message *</span></label>
             <textarea id="cf-message" name="message" rows="4" required data-fs-field></textarea>
             <span data-fs-error="message" class="field-error"></span>
           </div>
           <button type="submit" class="btn" data-fs-submit-btn>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 7 9 6 9-6M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg>
-            Nachricht senden
+            <span data-de>Nachricht senden</span><span data-en>Send message</span>
           </button>
         </form>
 
         <p style="margin-top: 18px; font-size: 0.82rem; color: var(--muted);">
-          Oder direkt per Mail: <a href="mailto:thimm@physik.rwth-aachen.de">thimm@physik.rwth-aachen.de</a>
+          <span data-de>Oder direkt per Mail:</span><span data-en>Or directly by email:</span>
+          <a href="mailto:thimm@physik.rwth-aachen.de">thimm@physik.rwth-aachen.de</a>
         </p>
       </div>
     </div>
-  </section>
+  </details>
 
-  <section id="ausblick">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Ausblick</h2>
-      </div>
-      <figure style="margin: 0;">
-        <div class="placeholder-img" style="max-width: none; aspect-ratio: auto; background: none;">
-          <img src="images/Phode_ausblick_aufbau.png" alt="Alternative PHODE-Hardwarevariante auf Basis eines Breadboard-Post-Holder-Systems" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
+  <details class="section-block" id="quellen" open>
+    <summary>
+      <div class="wrap">
+        <div class="section-toggle-bar">
+          <span><span data-de>Quellen</span><span data-en>Sources</span></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
         </div>
-        <figcaption style="margin-top: 10px; font-size: 0.85rem; color: var(--muted);">
-          Eine alternative Hardwarevariante von PHODE basierend auf einem Breadboard-Post-Holder-System.
-          Die Halterungen haften magnetisch auf der Grundplatte. Das Lochmuster gibt zusammen
-          mit Noppen auf der Unterseite der Halterungen ein Raster zur Platzierung der Bauteile
-          vor. Entwickelt wurde dieses Optiksystem aus Grundplatte und Halterungen von
-          Fabian Bernstein.
-        </figcaption>
-      </figure>
+      </div>
+    </summary>
+    <div class="wrap section-body">
+      <ul class="sources-list">
+        <li id="quellen-o3q">
+          <span class="ref-num">[1]</span>
+          <span>
+            <span data-de>O3Q-Optiksystem —</span><span data-en>O3Q optics system —</span>
+            <a href="https://o3q.de/" target="_blank" rel="noopener">o3q.de ↗</a>
+          </span>
+        </li>
+        <li id="quellen-bench">
+          <span class="ref-num">[2]</span>
+          <span>
+            <span data-de>"The Bench"-Haltersystem — Fabian Bernstein, TECHNOSEUM Mannheim</span>
+            <span data-en>"The Bench" mounting system — Fabian Bernstein, TECHNOSEUM Mannheim</span>
+          </span>
+        </li>
+        <li id="quellen-leisen">
+          <span class="ref-num">[3]</span>
+          <span>
+            Leisen, Josef: <span data-de>Quantenphysik – Mikroobjekte</span><span data-en>Quantenphysik – Mikroobjekte (Quantum physics – microobjects)</span>
+            <span data-de>(Handreichung zum Lehrplan Physik in der S&nbsp;II). Bad Kreuznach: Pädagogisches Zentrum Rheinland-Pfalz (PZ), 2000.</span>
+            <span data-en>(guidance handout for the upper-secondary physics curriculum). Bad Kreuznach: Pädagogisches Zentrum Rheinland-Pfalz (PZ), 2000.</span>
+          </span>
+        </li>
+      </ul>
+      <p class="team-note">
+        <span data-de>Team: Sebastian Staacks (Software), Ralf Detemple, Heidrun Heinke.</span>
+        <span data-en>Team: Sebastian Staacks (software), Ralf Detemple, Heidrun Heinke.</span>
+      </p>
     </div>
-  </section>
+  </details>
 
   <footer>
     <div class="wrap">
       <span>&copy; 2026 I. Physikalisches Institut IA, RWTH Aachen</span>
+      <span class="footer-archive-link">
+        <a href="gdcp-2026/">
+          <span data-de>Tagungsarchiv ↗</span>
+          <span data-en>Conference archive ↗</span>
+        </a>
+      </span>
       <span><a href="mailto:thimm@physik.rwth-aachen.de">thimm@physik.rwth-aachen.de</a></span>
+      <span class="footer-archive-link">
+        <a href="impressum.html"><span data-de>Impressum</span><span data-en>Imprint</span></a>
+        &middot;
+        <a href="datenschutz.html"><span data-de>Datenschutz</span><span data-en>Privacy</span></a>
+      </span>
     </div>
   </footer>
 
 <script>
   // Reihenfolge = wie im Aufbau angeordnet, vom Laser bis zur Kamera
+  // Die Bauteile sind fuer O3Q und The Bench identisch - nur das Bild
+  // unterscheidet sich (Bench hat noch keine eigenen Fotos -> Platzhalter).
   const components = [
     {
-      title: "Diodenlaser",
+      onlyVariant: "bench",
+      benchImg: "images/TheBench_Breadboard.jpg",
+      wide: true,
+      title: { de: "Breadboard-Grundplatte", en: "Breadboard base plate" },
+      desc: {
+        de: "Die Halterungen der optischen Elemente haften magnetisch auf der Grundplatte. Noppen an ihrer Unterseite greifen in das Lochmuster und legen so eine feste Rasterposition für jedes Bauteil fest. Dies ermöglicht einen stabilen, reproduzierbaren Aufbau wie in einem klassischen Optiklabor.",
+        en: "The mounts for the optical elements attach magnetically to the base plate. Pins on their underside engage with the hole pattern, fixing a defined grid position for each component. This allows for a stable, reproducible setup just like in a classical optics lab."
+      }
+    },
+    {
       img: "images/laser.jpg",
-      desc: "Erzeugt einen kollimierten roten Laserstrahl mit einer Wellenlänge von 635 nm. Die integrierte, verschiebbare Linse sorgt für einen kollimierten Strahl, dieser ist eine Voraussetzung für das typische Interferenzmuster.",
+      benchImg: "images/TheBench_Laser.jpg",
+      title: { de: "Diodenlaser", en: "Diode laser" },
+      desc: {
+        de: "Erzeugt einen kollimierten roten Laserstrahl mit einer Wellenlänge von 635 nm. Die integrierte, verschiebbare Linse sorgt für einen kollimierten Strahl, dieser ist eine Voraussetzung für das typische Interferenzmuster.",
+        en: "Produces a collimated red laser beam with a wavelength of 635 nm. The integrated, adjustable lens provides a collimated beam, a prerequisite for the characteristic interference pattern."
+      },
       price: "165 €",
-      diy: false,
-      sources: [{ label: "Bei Picotronic ansehen", url: "https://www.picotronic.de/picopage/de/product/detail/id/112113" }]
+      sources: [{ label: { de: "Bei Picotronic ansehen", en: "View at Picotronic" }, url: "https://www.picotronic.de/picopage/de/product/detail/id/112113" }]
     },
     {
-      title: "Neutraldichtefilter, fix",
       img: "images/ndfilter-fix.jpg",
-      desc: "Mit einer optischen Dichte von OD 4,0 schwächt dieser Filter den Laserstrahl um den Faktor 10.000 ab, bis er mit bloßem Auge nicht mehr sichtbar ist. Dies bildet eine sichtbare Grundlage für die Analogie zu einem Experiment mit geringer Photonenzahl.",
+      benchImg: "images/TheBench_fixND.jpg",
+      title: { de: "Neutraldichtefilter, fix", en: "Neutral density filter, fixed" },
+      desc: {
+        de: "Mit einer optischen Dichte von OD 4,0 schwächt dieser Filter den Laserstrahl um den Faktor 10.000 ab, bis er mit bloßem Auge nicht mehr sichtbar ist. Dies bildet eine sichtbare Grundlage für die Analogie zu einem Experiment mit geringer Photonenzahl.",
+        en: "With an optical density of OD 4.0, this filter attenuates the laser beam by a factor of 10,000, until it is no longer visible to the naked eye. This provides a visible basis for the analogy to an experiment with a low photon number."
+      },
       price: "69 €",
-      diy: false,
-      sources: [{ label: "Bei Thorlabs ansehen", url: "https://www.thorlabs.com/item/NE40A" }]
+      sources: [{ label: { de: "Bei Thorlabs ansehen", en: "View at Thorlabs" }, url: "https://www.thorlabs.com/item/NE40A" }]
     },
     {
-      title: "Neutraldichtefilter, variabel",
       img: "images/ndfilter-variabel.jpg",
-      desc: "Erlaubt die Feinabstimmung der Abschwächung, sodass pro Kamerabild nur wenige, stochastisch verteilte Lichtereignisse registriert werden.",
+      benchImg: "images/TheBench_varND.jpg",
+      title: { de: "Neutraldichtefilter, variabel", en: "Neutral density filter, variable" },
+      desc: {
+        de: "Erlaubt die Feinabstimmung der Abschwächung, sodass pro Kamerabild nur wenige, stochastisch verteilte Lichtereignisse registriert werden.",
+        en: "Allows fine adjustment of the attenuation so that only a few, stochastically distributed light events are registered per camera frame."
+      },
       price: "140 €",
-      diy: false,
-      sources: [{ label: "Bei Thorlabs ansehen", url: "https://www.thorlabs.com/de/item/NDL-25C-2" }]
+      sources: [{ label: { de: "Bei Thorlabs ansehen", en: "View at Thorlabs" }, url: "https://www.thorlabs.com/de/item/NDL-25C-2" }]
     },
     {
-      title: "Doppelspalt",
       img: "images/doppelspalt.jpg",
-      desc: "Beugt den abgeschwächten Laserstrahl und erzeugt das namensgebende Interferenzmuster. Spaltabstand 1 mm, Spaltbreite 0,15 mm, die Größen sind gewählt für mehrere gut sichtbare Maxima auf dem Kameraausschnitt und eine möglichst flache Einhüllende.",
+      benchImg: "images/TheBench_Doppelspalt.jpg",
+      title: { de: "Doppelspalt", en: "Double slit" },
+      desc: {
+        de: "Beugt den abgeschwächten Laserstrahl und erzeugt das namensgebende Interferenzmuster. Spaltabstand 1 mm, Spaltbreite 0,15 mm, die Größen sind gewählt für mehrere gut sichtbare Maxima auf dem Kameraausschnitt und eine möglichst flache Einhüllende.",
+        en: "Diffracts the attenuated laser beam and produces the namesake interference pattern. Slit spacing 1 mm, slit width 0.15 mm — chosen so that several clearly visible maxima appear in the camera frame with as flat an envelope as possible."
+      },
       price: "19 €",
-      diy: false,
-      sources: [{ label: "Bei 3B Scientific ansehen", url: "https://www.3bscientific.com/de/blende-mit-4-doppelspalten-unterschiedlichen-spaltabstandes-fuer-experimente-zur-optischen-beugung-und-interferenz-1000597-u14101-3b-scientific,p_872_1049.html?searchword=1000597" }]
+      sources: [{ label: { de: "Bei 3B Scientific ansehen", en: "View at 3B Scientific" }, url: "https://www.3bscientific.com/de/blende-mit-4-doppelspalten-unterschiedlichen-spaltabstandes-fuer-experimente-zur-optischen-beugung-und-interferenz-1000597-u14101-3b-scientific,p_872_1049.html?searchword=1000597" }]
     },
     {
-      title: "Rohrelemente",
       img: "images/rohrelemente.jpg",
-      desc: "Diese 3D-gedruckten Rohrelemente blocken Streu- und Umgebungslicht vor der Kamera. Dadurch funktioniert PHODE auch im vollständig beleuchteten Klassenraum, ohne dass abgedunkelt werden muss."
+      benchImg: "images/TheBench_Rohr.jpg",
+      title: { de: "Rohrelemente", en: "Tube elements" },
+      desc: {
+        de: "Diese 3D-gedruckten Rohrelemente blocken Streu- und Umgebungslicht vor der Kamera. Dadurch funktioniert PHODE auch im vollständig beleuchteten Klassenraum, ohne dass abgedunkelt werden muss.",
+        en: "These 3D-printed tube elements block stray and ambient light in front of the camera. This means PHODE also works in a fully lit classroom, without needing to darken the room."
+      }
     },
     {
-      title: "Kamera & Raspberry Pi 4",
       img: "images/kamera-pi.jpg",
-      desc: "Die Raspberry-Pi-Kamera detektiert ortsaufgelöst einzelne Lichtereignisse hinter dem Doppelspalt. Der angeschlossene Raspberry Pi 4 summiert die Bilder live auf und stellt das entstehende Interferenzmuster über eine WLAN-Weboberfläche dar.",
+      benchImg: "images/TheBench_Kamera.jpg",
+      title: { de: "Kamera & Raspberry Pi 4", en: "Camera & Raspberry Pi 4" },
+      desc: {
+        de: "Die Raspberry-Pi-Kamera detektiert ortsaufgelöst einzelne Lichtereignisse hinter dem Doppelspalt. Der angeschlossene Raspberry Pi 4 summiert die Bilder live auf und stellt das entstehende Interferenzmuster über eine WLAN-Weboberfläche dar.",
+        en: "The Raspberry Pi camera detects individual light events behind the double slit with spatial resolution. The connected Raspberry Pi 4 accumulates the images live and displays the emerging interference pattern via a WLAN web interface."
+      },
       price: "198 €",
-      diy: false,
       sources: [
-        { label: "Kamera bei Reichelt", url: "https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_kamera_12mp_75_c-_cs-fassung-276919" },
-        { label: "Pi 4 bei Reichelt", url: "https://www.reichelt.de/de/de/shop/produkt/das_raspberry_pi_4_b_4gb_black-bundle-278256" }
+        { label: { de: "Kamera bei Reichelt", en: "Camera at Reichelt" }, url: "https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_kamera_12mp_75_c-_cs-fassung-276919" },
+        { label: { de: "Pi 4 bei Reichelt", en: "Pi 4 at Reichelt" }, url: "https://www.reichelt.de/de/de/shop/produkt/das_raspberry_pi_4_b_4gb_black-bundle-278256" }
       ]
     }
   ];
 
+  const totalNoteText = {
+    o3q: {
+      de: 'Materialkosten insgesamt: <strong>ca. 625&nbsp;€</strong> (Stand 05/2026) &middot; zzgl. ca. 35&nbsp;h Druckzeit &amp; 500&nbsp;g Filament (PETG)',
+      en: 'Total material cost: <strong>approx. &euro;625</strong> (as of 05/2026) &middot; plus approx. 35&nbsp;h print time &amp; 500&nbsp;g filament (PETG)'
+    },
+    bench: {
+      de: 'Materialkosten der optischen Bauteile: <strong>ca. 591&nbsp;€</strong> &middot; Kosten der Breadboard-Halterung sind hier noch nicht erfasst',
+      en: 'Material cost of the optical components: <strong>approx. &euro;591</strong> &middot; cost of the breadboard mounting system not yet captured here'
+    }
+  };
+
   const thumbIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="m21 17-5.5-5.5a1.5 1.5 0 0 0-2.1 0L5 20"/></svg>';
+  const placeholderLabel = { de: "Platzhalterbild", en: "Placeholder image" };
 
   const list = document.getElementById('componentList');
+  const totalNote = document.getElementById('totalNote');
+  const variantBtns = document.querySelectorAll('[data-variant-btn]');
+  const langToggleBtn = document.getElementById('langToggle');
 
-  components.forEach((c) => {
-    const details = document.createElement('details');
-    details.className = 'component';
-    const sourceLinksHtml = (c.sources || []).map(s =>
-      `<a class="source-link" href="${s.url}" ${s.url.startsWith('#') ? '' : 'target="_blank" rel="noopener"'}>${s.label}${s.url.startsWith('#') ? '' : ' ↗'}</a>`
-    ).join('');
-    const thumbHtml = c.img
-      ? `<img src="${c.img}" alt="" loading="lazy">`
-      : thumbIcon;
-    const bigImgHtml = c.img
-      ? `<img src="${c.img}" alt="${c.title}" loading="lazy">`
-      : `${thumbIcon}<span>Platzhalterbild</span>`;
+  let currentVariant = 'o3q';
 
-    const hasFoot = c.price || sourceLinksHtml;
-    const footHtml = hasFoot
-      ? `<div class="component-foot">
-          ${c.price ? `<span class="price${c.diy ? ' diy' : ''}">${c.price}</span>` : '<span></span>'}
-          <span class="source-links">${sourceLinksHtml}</span>
-        </div>`
-      : '';
+  function getLang() {
+    return document.documentElement.lang === 'en' ? 'en' : 'de';
+  }
 
-    details.innerHTML = `
-      <summary>
-        <span class="thumb">${thumbHtml}</span>
-        <span class="summary-text">
-          <span class="summary-title">${c.title}</span>
-        </span>
-        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-      </summary>
-      <div class="component-body">
-        <div class="placeholder-img">
-          ${bigImgHtml}
-        </div>
-        <p class="component-desc">${c.desc}</p>
-        ${footHtml}
-      </div>`;
-    list.appendChild(details);
-  });
+  function renderComponents() {
+    const lang = getLang();
+    list.innerHTML = '';
+
+    components
+      .filter((c) => !c.onlyVariant || c.onlyVariant === currentVariant)
+      .forEach((c) => {
+      const details = document.createElement('details');
+      details.className = 'component';
+
+      const activeImg = currentVariant === 'bench' ? c.benchImg : c.img;
+      const useRealImg = !!activeImg;
+      const wideStyle = c.wide ? ' style="max-width: none; aspect-ratio: auto; background: none;"' : '';
+      const sourceLinksHtml = (c.sources || []).map(s =>
+        `<a class="source-link" href="${s.url}" target="_blank" rel="noopener">${s.label[lang]} ↗</a>`
+      ).join('');
+      const thumbHtml = useRealImg
+        ? `<img src="${activeImg}" alt="" loading="lazy">`
+        : thumbIcon;
+      const bigImgHtml = useRealImg
+        ? `<img src="${activeImg}" alt="${c.title[lang]}" loading="lazy"${c.wide ? ' style="width: 100%; height: auto; object-fit: contain;"' : ''}>`
+        : `${thumbIcon}<span>${placeholderLabel[lang]}</span>`;
+
+      const hasFoot = c.price || sourceLinksHtml;
+      const footHtml = hasFoot
+        ? `<div class="component-foot">
+            ${c.price ? `<span class="price">${c.price}</span>` : '<span></span>'}
+            <span class="source-links">${sourceLinksHtml}</span>
+          </div>`
+        : '';
+
+      details.innerHTML = `
+        <summary>
+          <span class="thumb">${thumbHtml}</span>
+          <span class="summary-text">
+            <span class="summary-title">${c.title[lang]}</span>
+          </span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="component-body">
+          <div class="placeholder-img"${wideStyle}>
+            ${bigImgHtml}
+          </div>
+          <p class="component-desc">${c.desc[lang]}</p>
+          ${footHtml}
+        </div>`;
+      list.appendChild(details);
+    });
+
+    totalNote.innerHTML = totalNoteText[currentVariant][lang];
+  }
+
+  function setVariant(variant) {
+    currentVariant = variant;
+    document.body.dataset.variant = variant;
+    variantBtns.forEach((btn) => btn.classList.toggle('active', btn.dataset.variantBtn === variant));
+    renderComponents();
+  }
+
+  variantBtns.forEach((btn) => btn.addEventListener('click', () => setVariant(btn.dataset.variantBtn)));
+
+  const pageMeta = {
+    de: { title: "PHODE – Aufbau & Bauteile", desc: "PHODE: Ein Experiment zum Welle-Teilchen-Dualismus aus dem 3D-Drucker. Alle Bauteile, Kosten und Bezugsquellen im Überblick." },
+    en: { title: "PHODE – Setup & Components", desc: "PHODE: An experiment on wave–particle duality, built with a 3D printer. All components, costs and sources at a glance." }
+  };
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    langToggleBtn.textContent = lang.toUpperCase();
+    document.title = pageMeta[lang].title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', pageMeta[lang].desc);
+    renderComponents();
+  }
+
+  langToggleBtn.addEventListener('click', () => setLang(getLang() === 'de' ? 'en' : 'de'));
+
+  renderComponents();
 </script>
 
 <script>
