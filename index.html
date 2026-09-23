@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHODE – Aufbau &amp; Bauteile</title>
+<title>PHODE. Aufbau &amp; Bauteile</title>
 <meta name="description" content="PHODE: Ein Experiment zum Welle-Teilchen-Dualismus aus dem 3D-Drucker. Alle Bauteile, Kosten und Bezugsquellen im Überblick.">
 <style>
   @font-face {
@@ -183,6 +183,11 @@
     font-weight: 600;
   }
   .o3q-note a:hover { text-decoration: underline; }
+  .construction-note {
+    background: var(--laser-dim); border: 1px solid rgba(224,137,0,0.4);
+    color: #7a4b00; font-size: 0.85rem;
+    padding: 8px 12px; border-radius: 8px; margin-bottom: 20px;
+  }
 
   /* ---------- Motivation (collapsible info box) ---------- */
   details.info-box {
@@ -563,6 +568,12 @@
         Haltersystem &quot;The Bench&quot;.</span>
         <span data-en>The mounts for the optical elements are based on the magnetic
         mounting system &quot;The Bench&quot;.</span>
+      </p>
+      <p class="construction-note" data-variant-note="bench">
+        <span data-de>🚧 Diese Variante befindet sich noch im Aufbau — die Kostenangaben sind
+        vorläufig, insbesondere für die Breadboard-Halterung.</span>
+        <span data-en>🚧 This variant is still under construction — the cost figures are
+        preliminary, especially for the breadboard mounting system.</span>
       </p>
       <div class="component-list" id="componentList"></div>
       <div class="total-note" id="totalNote"></div>
@@ -1061,8 +1072,8 @@
   variantBtns.forEach((btn) => btn.addEventListener('click', () => setVariant(btn.dataset.variantBtn)));
 
   const pageMeta = {
-    de: { title: "PHODE – Aufbau & Bauteile", desc: "PHODE: Ein Experiment zum Welle-Teilchen-Dualismus aus dem 3D-Drucker. Alle Bauteile, Kosten und Bezugsquellen im Überblick." },
-    en: { title: "PHODE – Setup & Components", desc: "PHODE: An experiment on wave–particle duality, built with a 3D printer. All components, costs and sources at a glance." }
+    de: { title: "PHODE. Aufbau & Bauteile", desc: "PHODE: Ein Experiment zum Welle-Teilchen-Dualismus aus dem 3D-Drucker. Alle Bauteile, Kosten und Bezugsquellen im Überblick." },
+    en: { title: "PHODE. Setup & Components", desc: "PHODE: An experiment on wave–particle duality, built with a 3D printer. All components, costs and sources at a glance." }
   };
 
   function setLang(lang) {
